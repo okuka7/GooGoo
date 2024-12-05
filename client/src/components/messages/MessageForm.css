@@ -1,0 +1,17 @@
+/* src/components/messages/MessageForm.css */
+
+.message-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-form textarea {
+  resize: none;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.message-form button {
+  align-self: flex-end;
+  padding: 8px 16px;
+}

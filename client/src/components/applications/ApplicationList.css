@@ -1,0 +1,109 @@
+/* 신청자 목록 전체 컨테이너 */
+.applicant-list {
+  margin-top: 20px;
+}
+
+/* 신청자 목록 제목 */
+.applicant-list h4 {
+  color: #2ecc71;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* 신청자 목록 ul 스타일 */
+.applicant-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 개별 신청자 아이템 */
+.applicant-item {
+  background-color: #f9f9f9;
+  padding: 15px 20px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 신청자 이름 버튼 스타일 */
+.applicant-item button {
+  background-color: transparent;
+  border: none;
+  color: #27ae60;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.applicant-item button:hover {
+  color: #219150;
+}
+
+/* 신청 상태 및 버튼을 감싸는 컨테이너 */
+.applicant-item .status-section {
+  display: flex;
+  align-items: center;
+}
+
+/* 상태 버튼 컨테이너 */
+.status-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* 승인 및 거절 버튼 스타일 */
+.status-buttons button {
+  background-color: #27ae60;
+  color: #ffffff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.status-buttons button:hover {
+  background-color: #219150;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .applicant-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .status-buttons {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .status-buttons button {
+    width: 48%;
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .applicant-item {
+    padding: 12px 16px;
+  }
+
+  .applicant-item button {
+    font-size: 14px;
+  }
+
+  .status-buttons button {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .applicant-list h4 {
+    font-size: 18px;
+  }
+}

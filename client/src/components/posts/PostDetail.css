@@ -1,0 +1,54 @@
+/* src/components/posts/PostDetail.css */
+
+.post-detail-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-detail-container h2 {
+  color: var(--main-color);
+  margin-bottom: 10px;
+}
+
+.post-detail-container p {
+  margin-bottom: 10px;
+}
+
+.post-detail-container img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+.post-detail-container h3 {
+  color: var(--main-color);
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.post-detail-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.post-detail-container li {
+  padding: 10px;
+  border-bottom: 1px solid #ced4da;
+}
+
+.post-detail-container li:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .post-detail-container {
+    padding: 15px;
+  }
+
+  .post-detail-container h2 {
+    font-size: 24px;
+  }
+}

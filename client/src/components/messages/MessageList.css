@@ -1,0 +1,22 @@
+/* src/components/messages/MessageList.css */
+
+.message-list {
+  list-style: none;
+  padding: 0;
+}
+
+.message-item {
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.message-item.sent {
+  background-color: #e1ffc7;
+  align-self: flex-end;
+}
+
+.message-item.received {
+  background-color: #f1f0f0;
+  align-self: flex-start;
+}

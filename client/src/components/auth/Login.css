@@ -1,0 +1,55 @@
+/* src/components/auth/Login.css */
+
+.auth-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.auth-container h2 {
+  color: var(--main-color);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-container form div {
+  margin-bottom: 15px;
+}
+
+.auth-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.auth-container input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.auth-container p {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.switch-button {
+  background: none;
+  border: none;
+  color: var(--main-color);
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+.switch-button:hover {
+  color: var(--secondary-color);
+}

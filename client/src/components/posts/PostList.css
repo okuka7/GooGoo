@@ -1,0 +1,50 @@
+/* src/components/posts/PostList.css */
+
+.post-list-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-list-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.post-list-container li {
+  padding: 15px;
+  border-bottom: 1px solid #ced4da;
+}
+
+.post-list-container li:last-child {
+  border-bottom: none;
+}
+
+.post-list-container li h3 {
+  color: var(--main-color);
+  margin-bottom: 5px;
+}
+
+.post-list-container li p {
+  margin-bottom: 5px;
+  color: #6c757d;
+}
+
+.post-list-container li p:last-child {
+  color: #343a40;
+}
+
+@media (max-width: 768px) {
+  .post-list-container {
+    padding: 15px;
+  }
+
+  .post-list-container li {
+    padding: 10px;
+  }
+
+  .post-list-container li h3 {
+    font-size: 18px;
+  }
+}

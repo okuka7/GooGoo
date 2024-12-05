@@ -1,0 +1,65 @@
+/* src/components/posts/PostForm.css */
+
+.post-form-container {
+  background-color: #ffffff;
+  padding: 20px;
+  max-width: 600px;
+  margin: 40px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-form-container h2 {
+  color: var(--main-color);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.post-form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-form-container form div {
+  margin-bottom: 15px;
+}
+
+.post-form-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.post-form-container input,
+.post-form-container textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.post-form-container p {
+  text-align: center;
+}
+
+.post-form-container button {
+  padding: 10px;
+  background-color: var(--main-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.post-form-container button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .post-form-container {
+    padding: 15px;
+    margin: 20px;
+  }
+}

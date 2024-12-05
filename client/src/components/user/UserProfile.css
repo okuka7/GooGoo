@@ -1,0 +1,24 @@
+.user-profile-container {
+  background-color: #ffffff;
+  padding: 40px;
+  max-width: 800px;
+  margin: 50px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.user-profile-container h2 {
+  margin-bottom: 30px;
+  color: #2ecc71;
+  font-size: 28px;
+  text-align: center;
+}
+
+.user-profile-container .user-info {
+  margin-bottom: 30px;
+}
+
+.user-profile-container .user-posts {
+  margin-bottom: 30px;
+}

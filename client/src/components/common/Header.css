@@ -1,0 +1,91 @@
+.header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-container {
+  margin-bottom: 10px;
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: bold;
+  color: #2ecc71;
+  text-decoration: none;
+}
+
+.logo:hover {
+  color: #27ae60;
+}
+
+nav {
+  width: 100%;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links li {
+  margin: 0 15px;
+}
+
+.nav-links li a,
+.nav-links li button {
+  color: #2ecc71;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.nav-links li a:hover,
+.nav-links li button:hover {
+  color: #27ae60;
+}
+
+.icon-button {
+  font-size: 24px;
+  color: #2ecc71;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.icon-button:hover {
+  color: #27ae60;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 15px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+  }
+
+  .nav-links li {
+    margin: 10px 0;
+  }
+
+  .icon-button {
+    font-size: 20px;
+  }
+}

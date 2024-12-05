@@ -1,0 +1,126 @@
+/* 전체 마이페이지 컨테이너 스타일 */
+.mypage-container {
+  background-color: #ffffff; /* 흰색 배경 */
+  padding: 40px;
+  border-radius: 8px;
+  max-width: 1200px;
+  margin: 50px auto;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+/* 마이페이지 제목 스타일 */
+.mypage-container h1 {
+  color: #2ecc71; /* 메인 녹색 색상 */
+  margin-bottom: 30px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* 사용자 정보 수정 버튼 스타일 */
+.edit-button {
+  background-color: #27ae60;
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 30px;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+}
+
+.edit-button:hover {
+  background-color: #219150;
+}
+
+/* 작성한 글 섹션 스타일 */
+.user-post-item {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-post-item h3 {
+  color: #333333;
+  margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.user-post-item p {
+  color: #555555;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* 신청자 목록 섹션 스타일 */
+.applicant-list {
+  margin-top: 20px;
+}
+
+.applicant-list h4 {
+  color: #2ecc71;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* 설문 상태 텍스트 스타일 */
+.mypage-container p {
+  color: #666666;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .mypage-container {
+    padding: 30px;
+    margin: 30px 20px;
+  }
+
+  .mypage-container h1 {
+    font-size: 28px;
+  }
+
+  .edit-button {
+    width: 100%;
+    padding: 14px 0;
+    font-size: 18px;
+  }
+
+  .user-post-item h3 {
+    font-size: 20px;
+  }
+
+  .user-post-item p {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mypage-container {
+    padding: 20px;
+    margin: 20px 10px;
+  }
+
+  .mypage-container h1 {
+    font-size: 24px;
+  }
+
+  .edit-button {
+    font-size: 16px;
+    padding: 12px 0;
+  }
+
+  .user-post-item h3 {
+    font-size: 18px;
+  }
+
+  .user-post-item p {
+    font-size: 14px;
+  }
+}

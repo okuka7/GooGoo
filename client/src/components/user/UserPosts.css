@@ -1,0 +1,28 @@
+.user-posts-list {
+  list-style: none;
+  padding: 0;
+}
+
+.user-post-item {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.user-post-item:hover {
+  background-color: #e8f5e9;
+}
+
+.user-post-item h4 {
+  color: #333333;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.user-post-item p {
+  color: #555555;
+  margin-bottom: 8px;
+  font-size: 16px;
+}

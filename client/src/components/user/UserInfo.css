@@ -1,0 +1,18 @@
+.user-info {
+  background-color: #f9f9f9;
+  padding: 30px;
+  border-radius: 6px;
+  margin-bottom: 30px;
+}
+
+.user-info h2 {
+  margin-bottom: 20px;
+  color: #2ecc71;
+  font-size: 24px;
+}
+
+.user-info p {
+  color: #555555;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
