@@ -1,13 +1,9 @@
-// src/main/java/com/server/application/dto/UpdateApplicationStatusRequest.java
-
 package com.server.application.dto;
 
 import com.server.application.model.ApplicationStatus;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-public class UpdateApplicationStatusRequest {
+@Data
+public class UpdateStatusRequestDto {
     private ApplicationStatus status;
 }

@@ -8,8 +8,11 @@ import com.server.auth.model.User;
 import com.server.survey.repository.SurveyRepository;
 import com.server.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @RequiredArgsConstructor
@@ -46,4 +49,7 @@ public class SurveyService {
         user.setSurvey(savedSurvey);
         userRepository.save(user);
     }
+
+
+
 }
