@@ -1,6 +1,6 @@
-/* src/components/common/Footer.css */
-
 footer {
+  flex: 0 0 auto; /* 푸터는 자연스러운 높이를 가짐 */
+  margin-top: auto; /* 푸터를 하단으로 밀기 */
   background-color: #ffffff;
   border-top: 1px solid #e0e0e0; /* 헤더와 구분하기 위해 상단에 경계선 추가 */
   padding: 20px;

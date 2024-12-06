@@ -54,41 +54,43 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="app-container">
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/board" element={<Board />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/posts/:postId" element={<PostDetail />} />
-        <Route
-          path="/posts/new"
-          element={
-            <PrivateRoute>
-              <PostForm />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/mypage"
-          element={
-            <PrivateRoute>
-              <MyPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/users/:username"
-          element={
-            <PrivateRoute>
-              <UserProfile />
-            </PrivateRoute>
-          }
-        />
-        {/* 인증되지 않은 사용자에게 기본 경로 리디렉션 */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/board" element={<Board />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/posts/:postId" element={<PostDetail />} />
+          <Route
+            path="/posts/new"
+            element={
+              <PrivateRoute>
+                <PostForm />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/mypage"
+            element={
+              <PrivateRoute>
+                <MyPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/users/:username"
+            element={
+              <PrivateRoute>
+                <UserProfile />
+              </PrivateRoute>
+            }
+          />
+          {/* 인증되지 않은 사용자에게 기본 경로 리디렉션 */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
       <Footer />
 
       {/* SurveyPopup 추가 */}
