@@ -1,5 +1,3 @@
-// src/store/authSlice.js
-
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../api/api";
 
@@ -8,12 +6,10 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ username, password }, thunkAPI) => {
     try {
-      // URLSearchParams를 사용하여 폼 데이터 생성
       const formData = new URLSearchParams();
       formData.append("username", username);
       formData.append("password", password);
 
-      // 로그인 요청: application/x-www-form-urlencoded 형식으로 전송
       const response = await api.post("/auth/login", formData, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -23,7 +19,6 @@ export const loginUser = createAsyncThunk(
       const data = response.data;
       localStorage.setItem("token", data.token);
 
-      // 사용자 정보 요청
       const userInfoResponse = await api.get("/users/me");
       return { token: data.token, user: userInfoResponse.data };
     } catch (error) {
@@ -33,7 +28,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-// Thunk for user signup
+// 회원가입 thunk
 export const signupUser = createAsyncThunk(
   "auth/signupUser",
   async ({ username, password, nickname }, thunkAPI) => {
@@ -45,7 +40,7 @@ export const signupUser = createAsyncThunk(
       });
       const data = response.data;
       localStorage.setItem("token", data.token);
-      // 회원가입 후 사용자 정보 받아오기
+
       const userInfoResponse = await api.get("/users/me");
       return { token: data.token, user: userInfoResponse.data };
     } catch (error) {
@@ -55,7 +50,7 @@ export const signupUser = createAsyncThunk(
   }
 );
 
-// Thunk for fetching user info
+// 사용자 정보 가져오기 thunk
 export const fetchUserInfo = createAsyncThunk(
   "auth/fetchUserInfo",
   async (_, thunkAPI) => {
@@ -70,6 +65,55 @@ export const fetchUserInfo = createAsyncThunk(
   }
 );
 
+// 프로필 정보 업데이트 thunk
+export const updateUserInfo = createAsyncThunk(
+  "auth/updateUserInfo",
+  async ({ nickname, password }, thunkAPI) => {
+    try {
+      const updateData = { nickname };
+      if (password) {
+        updateData.password = password;
+      }
+
+      const response = await api.put("/users/me", updateData);
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.error || "프로필 수정 실패";
+      return thunkAPI.rejectWithValue({ error: errorMessage });
+    }
+  }
+);
+
+// 설문 데이터 가져오기 thunk
+export const fetchSurvey = createAsyncThunk(
+  "auth/fetchSurvey",
+  async (_, thunkAPI) => {
+    try {
+      const response = await api.get("/survey");
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.error || "설문 데이터 로드 실패";
+      return thunkAPI.rejectWithValue({ error: errorMessage });
+    }
+  }
+);
+
+// 설문 데이터 업데이트 thunk
+export const updateSurvey = createAsyncThunk(
+  "auth/updateSurvey",
+  async (surveyData, thunkAPI) => {
+    try {
+      const response = await api.put("/survey", surveyData);
+      return response.data;
+    } catch (error) {
+      const errorMessage = error.response?.data?.error || "설문 수정 실패";
+      return thunkAPI.rejectWithValue({ error: errorMessage });
+    }
+  }
+);
+
+// Slice 정의
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -77,6 +121,7 @@ const authSlice = createSlice({
     isAuthenticated: !!localStorage.getItem("token"),
     loading: false,
     user: null,
+    survey: null,
     error: null,
   },
   reducers: {
@@ -84,12 +129,13 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       state.user = null;
+      state.survey = null;
       localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
     builder
-      // Login
+      // 로그인 처리
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -104,7 +150,8 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload?.error || "로그인 실패";
       })
-      // Signup
+
+      // 회원가입 처리
       .addCase(signupUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -119,7 +166,8 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload?.error || "회원가입 실패";
       })
-      // Fetch User Info
+
+      // 사용자 정보 가져오기 처리
       .addCase(fetchUserInfo.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -127,10 +175,54 @@ const authSlice = createSlice({
       .addCase(fetchUserInfo.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+        state.isAuthenticated = true;
       })
       .addCase(fetchUserInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.error || "사용자 정보 로드 실패";
+        state.isAuthenticated = false;
+      })
+
+      // 프로필 정보 업데이트 처리
+      .addCase(updateUserInfo.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(updateUserInfo.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.error || "프로필 수정 실패";
+      })
+
+      // 설문 데이터 가져오기 처리
+      .addCase(fetchSurvey.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchSurvey.fulfilled, (state, action) => {
+        state.loading = false;
+        state.survey = action.payload;
+      })
+      .addCase(fetchSurvey.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.error || "설문 데이터 로드 실패";
+      })
+
+      // 설문 데이터 업데이트 처리
+      .addCase(updateSurvey.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateSurvey.fulfilled, (state, action) => {
+        state.loading = false;
+        state.survey = action.payload;
+      })
+      .addCase(updateSurvey.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.error || "설문 수정 실패";
       });
   },
 });

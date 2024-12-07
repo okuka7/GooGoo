@@ -71,7 +71,16 @@ const PostDetail = () => {
     <div className="post-detail-container">
       <h2>{post.title}</h2>
       <p>작성자: {post.authorNickname || post.authorUsername}</p>
-      <p>작성일: {new Date(post.createdAt).toLocaleDateString()}</p>
+      <p>
+        작성일:{" "}
+        {new Date(post.createdAt)
+          .toLocaleDateString("ko-KR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+          .replace(/\.$/, "")}
+      </p>
       <p>반려동물 종류: {post.animalType}</p>
       {post.imageUrl && (
         <img

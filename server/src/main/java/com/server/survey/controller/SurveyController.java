@@ -16,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -106,6 +107,12 @@ public class SurveyController {
         );
 
         return ResponseEntity.ok(surveyDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllSurveys() {
+        List<Survey> surveys = surveyRepository.findAll();
+        return ResponseEntity.ok(surveys);
     }
 
 

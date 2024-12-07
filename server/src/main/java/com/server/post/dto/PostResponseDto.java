@@ -1,5 +1,6 @@
 package com.server.post.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.post.model.Post;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class PostResponseDto {
     private String imageUrl;
     private String authorUsername;  // 추가된 필드
     private String authorNickname;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
     public static PostResponseDto fromEntity(Post post) {

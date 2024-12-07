@@ -23,7 +23,7 @@ public class ApplicationController {
     @PostMapping("/{postId}")
     public ResponseEntity<ApplicationResponseDto> createApplication(
             @AuthenticationPrincipal UserDetails userDetails,
-            @PathVariable Long postId) {
+            @PathVariable("postId") Long postId) { // 명시적으로 "postId" 추가
         ApplicationResponseDto application = applicationService.createApplication(userDetails.getUsername(), postId);
         return ResponseEntity.status(HttpStatus.CREATED).body(application);
     }
@@ -32,7 +32,7 @@ public class ApplicationController {
     @GetMapping("/posts/{postId}")
     public ResponseEntity<List<ApplicationResponseDto>> getApplicationsByPost(
             @AuthenticationPrincipal UserDetails userDetails,
-            @PathVariable Long postId) {
+            @PathVariable("postId") Long postId) { // 명시적으로 "postId" 추가
         List<ApplicationResponseDto> applications = applicationService.getApplicationsByPost(userDetails.getUsername(), postId);
         return ResponseEntity.ok(applications);
     }
@@ -41,10 +41,9 @@ public class ApplicationController {
     @PostMapping("/{applicationId}/status")
     public ResponseEntity<ApplicationResponseDto> updateApplicationStatus(
             @AuthenticationPrincipal UserDetails userDetails,
-            @PathVariable Long applicationId,
-            @RequestParam ApplicationStatus status) {
+            @PathVariable("applicationId") Long applicationId, // 명시적으로 "applicationId" 추가
+            @RequestParam("status") ApplicationStatus status) { // 명시적으로 "status" 추가
         ApplicationResponseDto application = applicationService.updateApplicationStatus(userDetails.getUsername(), applicationId, status);
         return ResponseEntity.ok(application);
     }
 }
-

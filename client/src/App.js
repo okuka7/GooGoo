@@ -15,6 +15,7 @@ import PrivateRoute from "./components/common/PrivateRoute";
 import PostDetail from "./components/posts/PostDetail";
 import PostForm from "./components/posts/PostForm";
 import SurveyPopup from "./components/survey/SurveyPopup";
+import EditProfile from "./pages/EditProfile";
 import "./styles/main.css";
 import api from "./api/api";
 
@@ -76,6 +77,14 @@ function App() {
             element={
               <PrivateRoute>
                 <MyPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/edit-profile"
+            element={
+              <PrivateRoute>
+                <EditProfile />
               </PrivateRoute>
             }
           />

@@ -1,5 +1,6 @@
 package com.server.post.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.auth.model.User;
 import com.server.application.model.Application;
 import jakarta.persistence.*;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

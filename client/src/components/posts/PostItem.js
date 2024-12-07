@@ -18,7 +18,14 @@ const PostItem = ({ post }) => {
         <p className="post-animalType">반려동물 종류: {post.animalType}</p>
         <p className="post-author">작성자: {post.authorNickname}</p>
         <p className="post-date">
-          작성일: {new Date(post.createdAt).toLocaleDateString()}
+          작성일:{" "}
+          {new Date(post.createdAt)
+            .toLocaleDateString("ko-KR", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })
+            .replace(/\.$/, "")}
         </p>
       </Link>
     </li>

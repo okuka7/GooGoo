@@ -69,7 +69,7 @@ const ApplicationList = ({ postId }) => {
       <ul className="applicant-list">
         {applications.map((app) => {
           console.log("Application Item:", app); // 콘솔 로그 추가
-          const userId = app.user?.id; // 애플리케이션 객체에서 사용자 ID 추출
+          const userId = app.userId; // 애플리케이션 객체에서 사용자 ID 추출
           if (!userId) {
             console.warn(`User ID is missing for application ID: ${app.id}`);
           }

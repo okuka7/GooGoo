@@ -12,5 +12,6 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     List<Application> findByPost(Post post);
     boolean existsByPostAndApplicant(Post post, User applicant);
+    List<Application> findByPostId(Long postId);
 }
 
