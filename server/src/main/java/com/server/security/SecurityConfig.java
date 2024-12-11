@@ -1,6 +1,6 @@
 package com.server.security;
 
-import com.server.auth.service.CustomUserDetailsService;
+import com.server.service.CustomUserDetailsService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

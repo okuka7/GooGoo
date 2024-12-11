@@ -3,7 +3,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./PostItem.css";
-import placeholderImage from "../../placeholder.png"; // 기본 이미지
+import placeholderImage from "../../placeholder.png";
 
 const PostItem = ({ post }) => {
   return (
@@ -14,7 +14,10 @@ const PostItem = ({ post }) => {
           alt={post.title}
           className="post-image"
         />
-        <h3 className="post-title">{post.title}</h3>
+        <h3 className="post-title">
+          {post.title}{" "}
+          {post.completed && <span className="completed-label">분양완료</span>}
+        </h3>
         <p className="post-animalType">반려동물 종류: {post.animalType}</p>
         <p className="post-author">작성자: {post.authorNickname}</p>
         <p className="post-date">

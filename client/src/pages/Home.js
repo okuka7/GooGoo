@@ -10,7 +10,8 @@ const Home = () => {
     <div className="home-container">
       <SlideBanner />
       <h1>최신 분양글</h1>
-      <PostList />
+      {/* hideCompleted를 true로 전달하여 분양완료 글을 숨김 */}
+      <PostList hideCompleted={true} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 package com.server.security;
 
-import com.server.auth.service.CustomUserDetailsService;
+import com.server.service.CustomUserDetailsService;
 import com.server.util.JwtUtil;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;

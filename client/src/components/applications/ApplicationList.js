@@ -1,60 +1,53 @@
 // src/components/applications/ApplicationList.js
 
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetchApplicationsByPost,
   updateApplicationStatus,
 } from "../../store/applicationSlice";
 import "./ApplicationList.css";
-import UserSurveyPopup from "../survey/UserSurveyPopup"; // ✅ UserSurveyPopup 임포트
+import UserSurveyPopup from "../survey/UserSurveyPopup";
 
 const ApplicationList = ({ postId }) => {
   const dispatch = useDispatch();
-  const [applications, setApplications] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const applications = useSelector(
+    (state) => state.applications.applicationsByPost[postId] || []
+  );
+  const loading = useSelector((state) => state.applications.loading);
+  const error = useSelector((state) => state.applications.error);
 
-  const [surveyModalOpen, setSurveyModalOpen] = useState(false); // 설문 모달 상태
-  const [currentUserId, setCurrentUserId] = useState(null); // 현재 신청자의 사용자 ID
+  const [surveyModalOpen, setSurveyModalOpen] = React.useState(false);
+  const [currentUserId, setCurrentUserId] = React.useState(null);
 
   useEffect(() => {
     dispatch(fetchApplicationsByPost(postId))
       .unwrap()
       .then((data) => {
-        console.log("Fetched Applications:", data); // 콘솔 로그 추가
-        setApplications(data);
-        setLoading(false);
+        console.log("Fetched Applications:", data);
       })
       .catch((err) => {
-        console.error("Fetch Applications Error:", err); // 콘솔 로그 추가
-        setError(err.error || "신청자 정보를 가져오는 데 실패했습니다.");
-        setLoading(false);
+        console.error("Fetch Applications Error:", err);
       });
   }, [dispatch, postId]);
 
   const handleStatusChange = (applicationId, status) => {
-    dispatch(updateApplicationStatus({ applicationId, status }))
+    dispatch(updateApplicationStatus({ postId, applicationId, status }))
       .unwrap()
       .then(() => {
         alert(`신청 상태가 ${status}로 변경되었습니다.`);
-        setApplications((prevApps) =>
-          prevApps.map((app) =>
-            app.id === applicationId ? { ...app, status } : app
-          )
-        );
       })
       .catch((error) => alert(error));
   };
 
   const handleViewSurvey = (userId) => {
-    console.log("Opening Survey for User ID:", userId); // 콘솔 로그 추가
+    console.log("Opening Survey for User ID:", userId);
     setCurrentUserId(userId);
     setSurveyModalOpen(true);
   };
 
   const closeSurveyModal = () => {
-    console.log("Closing Survey Modal"); // 콘솔 로그 추가
+    console.log("Closing Survey Modal");
     setSurveyModalOpen(false);
     setCurrentUserId(null);
   };
@@ -68,8 +61,8 @@ const ApplicationList = ({ postId }) => {
       <h4>신청자 목록</h4>
       <ul className="applicant-list">
         {applications.map((app) => {
-          console.log("Application Item:", app); // 콘솔 로그 추가
-          const userId = app.userId; // 애플리케이션 객체에서 사용자 ID 추출
+          console.log("Application Item:", app);
+          const userId = app.userId;
           if (!userId) {
             console.warn(`User ID is missing for application ID: ${app.id}`);
           }
@@ -100,7 +93,7 @@ const ApplicationList = ({ postId }) => {
 
       {surveyModalOpen && (
         <UserSurveyPopup
-          userId={currentUserId} // 수정된 prop 이름과 전달 값
+          userId={currentUserId}
           isOpen={surveyModalOpen}
           onClose={closeSurveyModal}
         />

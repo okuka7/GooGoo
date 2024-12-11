@@ -1,9 +1,11 @@
+// src/components/posts/PostDetail.js
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts, deletePost } from "../../store/postSlice";
-import { applyForPost } from "../../store/applicationSlice"; // 필요 시 유지
-import SurveyPopup from "../survey/SurveyPopup"; // SurveyPopup 임포트
+import { applyForPost } from "../../store/applicationSlice";
+import SurveyPopup from "../survey/SurveyPopup";
 import "./PostDetail.css";
 
 const PostDetail = () => {
@@ -14,7 +16,7 @@ const PostDetail = () => {
   const { posts, loading, error } = useSelector((state) => state.posts);
   const { user, isAuthenticated } = useSelector((state) => state.auth);
 
-  const [surveyModalOpen, setSurveyModalOpen] = useState(false); // 설문 모달 상태
+  const [surveyModalOpen, setSurveyModalOpen] = useState(false);
 
   // 현재 게시물 찾기
   const post = posts.find((p) => p.id === parseInt(postId));
@@ -27,7 +29,6 @@ const PostDetail = () => {
       // 게시물이 로드되지 않았다면 게시물 목록을 가져옵니다.
       dispatch(fetchPosts());
     }
-    // 신청자 목록 관련 dispatch 제거
   }, [dispatch, post]);
 
   if (loading) return <div>로딩 중...</div>;
@@ -57,19 +58,17 @@ const PostDetail = () => {
       .catch((err) => alert(err));
   };
 
-  // 설문 보기 핸들러 (필요 시 유지)
   const handleViewSurvey = () => {
     setSurveyModalOpen(true);
   };
 
-  // 설문 모달 닫기 핸들러
   const closeSurveyModal = () => {
     setSurveyModalOpen(false);
   };
 
   return (
     <div className="post-detail-container">
-      <h2>{post.title}</h2>
+      <h2>{post.title} </h2>
       <p>작성자: {post.authorNickname || post.authorUsername}</p>
       <p>
         작성일:{" "}
@@ -93,8 +92,13 @@ const PostDetail = () => {
         className="post-content"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
+      <h3>
+        {post.completed && (
+          <span className="completed-label">분양이 완료되었습니다</span>
+        )}
+      </h3>
 
-      {/* 작성자인 경우 수정 및 삭제 버튼 표시 */}
+      {/* 게시물 작성자인 경우 수정 및 삭제 버튼 */}
       {isAuthor && (
         <div className="post-actions">
           <button
@@ -109,8 +113,8 @@ const PostDetail = () => {
         </div>
       )}
 
-      {/* 작성자가 아닌 경우 분양 신청 버튼 표시 */}
-      {isAuthenticated && !isAuthor && (
+      {/* 게시물 작성자가 아니고, 분양 완료가 아닌 경우에만 분양 신청 버튼 표시 */}
+      {isAuthenticated && !isAuthor && !post.completed && (
         <button className="apply-button" onClick={handleApply}>
           분양 신청하기
         </button>
@@ -118,11 +122,7 @@ const PostDetail = () => {
 
       {/* 설문 팝업 */}
       {surveyModalOpen && (
-        <SurveyPopup
-          isOpen={surveyModalOpen}
-          onClose={closeSurveyModal}
-          // applicantId prop 제거 또는 필요 시 수정
-        />
+        <SurveyPopup isOpen={surveyModalOpen} onClose={closeSurveyModal} />
       )}
     </div>
   );

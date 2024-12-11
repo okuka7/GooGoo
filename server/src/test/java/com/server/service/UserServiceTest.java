@@ -1,10 +1,9 @@
 package com.server.service;
 
-import com.server.auth.dto.UserRegistrationDto;
-import com.server.auth.service.UserService;
+import com.server.dto.UserRegistrationDto;
 import com.server.common.exception.CustomException;
-import com.server.auth.model.User;
-import com.server.auth.repository.UserRepository;
+import com.server.model.User;
+import com.server.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

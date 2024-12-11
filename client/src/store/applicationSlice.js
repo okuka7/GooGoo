@@ -9,7 +9,7 @@ export const applyForPost = createAsyncThunk(
   async (postId, thunkAPI) => {
     try {
       const response = await api.post(`/applications/${postId}`);
-      return response.data;
+      return { postId, application: response.data };
     } catch (error) {
       const errorMessage = error.response?.data?.error || "분양 신청 실패";
       return thunkAPI.rejectWithValue({ error: errorMessage });
@@ -23,7 +23,7 @@ export const fetchApplicationsByPost = createAsyncThunk(
   async (postId, thunkAPI) => {
     try {
       const response = await api.get(`/applications/posts/${postId}`);
-      return response.data;
+      return { postId, applications: response.data };
     } catch (error) {
       const errorMessage =
         error.response?.data?.error || "신청자 목록 로드 실패";
@@ -35,13 +35,12 @@ export const fetchApplicationsByPost = createAsyncThunk(
 // Thunk for updating application status
 export const updateApplicationStatus = createAsyncThunk(
   "applications/updateApplicationStatus",
-  async ({ applicationId, status }, thunkAPI) => {
+  async ({ postId, applicationId, status }, thunkAPI) => {
     try {
-      // 상태를 요청 본문으로 전송 (백엔드가 이를 지원하는지 확인 필요)
       const response = await api.post(`/applications/${applicationId}/status`, {
         status,
       });
-      return response.data;
+      return { postId, application: response.data };
     } catch (error) {
       const errorMessage =
         error.response?.data?.error || "신청 상태 업데이트 실패";
@@ -53,7 +52,8 @@ export const updateApplicationStatus = createAsyncThunk(
 const applicationSlice = createSlice({
   name: "applications",
   initialState: {
-    applications: [],
+    // applicationsByPost: { [postId]: [applications] }
+    applicationsByPost: {},
     loading: false,
     error: null,
   },
@@ -67,7 +67,11 @@ const applicationSlice = createSlice({
       })
       .addCase(applyForPost.fulfilled, (state, action) => {
         state.loading = false;
-        state.applications.push(action.payload);
+        const { postId, application } = action.payload;
+        if (!state.applicationsByPost[postId]) {
+          state.applicationsByPost[postId] = [];
+        }
+        state.applicationsByPost[postId].push(application);
       })
       .addCase(applyForPost.rejected, (state, action) => {
         state.loading = false;
@@ -81,7 +85,8 @@ const applicationSlice = createSlice({
       })
       .addCase(fetchApplicationsByPost.fulfilled, (state, action) => {
         state.loading = false;
-        state.applications = action.payload;
+        const { postId, applications } = action.payload;
+        state.applicationsByPost[postId] = applications;
       })
       .addCase(fetchApplicationsByPost.rejected, (state, action) => {
         state.loading = false;
@@ -95,12 +100,15 @@ const applicationSlice = createSlice({
       })
       .addCase(updateApplicationStatus.fulfilled, (state, action) => {
         state.loading = false;
-        const updatedApplication = action.payload;
-        const index = state.applications.findIndex(
-          (app) => app.id === updatedApplication.id
-        );
-        if (index !== -1) {
-          state.applications[index] = updatedApplication;
+        const { postId, application: updatedApplication } = action.payload;
+        const applications = state.applicationsByPost[postId];
+        if (applications) {
+          const index = applications.findIndex(
+            (app) => app.id === updatedApplication.id
+          );
+          if (index !== -1) {
+            applications[index] = updatedApplication;
+          }
         }
       })
       .addCase(updateApplicationStatus.rejected, (state, action) => {

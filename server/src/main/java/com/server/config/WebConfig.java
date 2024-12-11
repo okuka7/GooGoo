@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableWebMvc // 이미 다른 곳에서 @EnableWebMvc를 사용하고 있다면 중복 사용하지 마세요.
 public class WebConfig implements WebMvcConfigurer {
 
     @Override

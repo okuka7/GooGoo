@@ -1,11 +1,10 @@
 package com.server.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.server.auth.controller.AuthController;
-import com.server.auth.dto.UserRegistrationDto;
+import com.server.dto.UserRegistrationDto;
 import com.server.common.exception.CustomException;
-import com.server.auth.model.User;
-import com.server.auth.service.UserService;
+import com.server.model.User;
+import com.server.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
