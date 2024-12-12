@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class ApplicationResponseDto {
 
     private Long id;
+    private String applicantUsername; // 추가
     private String applicantNickname;
     private ApplicationStatus status;
     private LocalDateTime appliedAt;
@@ -23,6 +24,7 @@ public class ApplicationResponseDto {
         response.setApplicantNickname(application.getApplicant().getNickname());
         response.setStatus(application.getStatus());
         response.setAppliedAt(application.getAppliedAt());
+        response.setApplicantUsername(application.getApplicant().getUsername());
         response.setUserId(application.getApplicant().getId()); // userId 설정
         return response;
     }

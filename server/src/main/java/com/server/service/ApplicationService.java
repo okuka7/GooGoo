@@ -46,6 +46,7 @@ public class ApplicationService {
         if (status == ApplicationStatus.ACCEPTED) {
             post.setCompleted(true);
             postRepository.save(post);
+
         }
 
         return ApplicationResponseDto.fromEntity(application);

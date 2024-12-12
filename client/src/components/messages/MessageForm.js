@@ -1,35 +1,36 @@
 // src/components/messages/MessageForm.js
 
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { sendMessage } from "../../store/messageSlice";
+import PropTypes from "prop-types";
 import "./MessageForm.css";
 
-const MessageForm = ({ recipientUsername }) => {
+const MessageForm = ({ onSubmit, receiverUsername }) => {
   const [content, setContent] = useState("");
-  const dispatch = useDispatch();
 
-  const handleSend = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!content.trim()) return;
+    if (content.trim() === "") return;
 
-    dispatch(sendMessage({ receiverUsername: recipientUsername, content }))
-      .unwrap()
-      .then(() => setContent(""))
-      .catch((error) => alert(error));
+    onSubmit(content);
+    setContent("");
   };
 
   return (
-    <form onSubmit={handleSend} className="message-form">
-      <textarea
+    <form onSubmit={handleSubmit} className="message-form">
+      <input
+        type="text"
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="메시지를 입력하세요..."
-        required
-      ></textarea>
+      />
       <button type="submit">전송</button>
     </form>
   );
+};
+
+MessageForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  receiverUsername: PropTypes.string.isRequired,
 };
 
 export default MessageForm;

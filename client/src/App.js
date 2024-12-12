@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import Home from "./pages/Home";
 import Board from "./pages/Board";
 import MyPage from "./pages/MyPage";
+import MyAdoptions from "./pages/MyAdoptions";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import UserProfile from "./components/user/UserProfile";
@@ -16,10 +17,15 @@ import PostDetail from "./components/posts/PostDetail";
 import PostForm from "./components/posts/PostForm";
 import SurveyPopup from "./components/survey/SurveyPopup";
 import EditProfile from "./pages/EditProfile";
+import MessagePage from "./pages/MessagePage";
+import MessageListPage from "./pages/MessageListPage"; // 추가
 import "./styles/main.css";
 import api from "./api/api";
+import { fetchUnreadCount } from "./store/messageSlice";
+import { connectWebSocket, disconnectWebSocket } from "./utils/websocket"; // 추가
 
 function App() {
+  const dispatch = useDispatch();
   const [isSurveyOpen, setIsSurveyOpen] = useState(false);
   const { isAuthenticated } = useSelector((state) => state.auth);
 
@@ -27,7 +33,7 @@ function App() {
     const checkSurveyStatus = async () => {
       if (isAuthenticated) {
         try {
-          const response = await api.get("/users/me");
+          const response = await api.get("/api/users/me");
           const { surveyCompleted } = response.data;
 
           const surveyDismissed = localStorage.getItem("surveyDismissed");
@@ -53,6 +59,24 @@ function App() {
     setIsSurveyOpen(false);
     localStorage.setItem("surveyDismissed", "true");
   };
+
+  // 메시지 알림 갱신
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchUnreadCount());
+    }
+  }, [isAuthenticated, dispatch]);
+
+  // WebSocket 연결 관리
+  useEffect(() => {
+    if (isAuthenticated) {
+      connectWebSocket();
+    }
+
+    return () => {
+      disconnectWebSocket();
+    };
+  }, [isAuthenticated]);
 
   return (
     <div className="app-container">
@@ -96,13 +120,38 @@ function App() {
               </PrivateRoute>
             }
           />
-          {/* 인증되지 않은 사용자에게 기본 경로 리디렉션 */}
+          <Route
+            path="/my-adoptions"
+            element={
+              <PrivateRoute>
+                <MyAdoptions />
+              </PrivateRoute>
+            }
+          />
+          {/* 메시지 목록 페이지로 이동 */}
+          <Route
+            path="/messages"
+            element={
+              <PrivateRoute>
+                <MessageListPage />
+              </PrivateRoute>
+            }
+          />
+          {/* 특정 상대와의 대화 페이지 */}
+          <Route
+            path="/messages/:otherUsername"
+            element={
+              <PrivateRoute>
+                <MessagePage />
+              </PrivateRoute>
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
       <Footer />
 
-      {/* SurveyPopup 추가 */}
+      {/* 전역 설문 팝업 */}
       <SurveyPopup
         isOpen={isSurveyOpen}
         onSubmit={handleSurveySubmit}

@@ -3,20 +3,55 @@
 .message-list {
   list-style: none;
   padding: 0;
+  margin: 0;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .message-item {
-  padding: 10px;
-  margin-bottom: 5px;
-  border-radius: 5px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  max-width: 60%;
+  position: relative;
 }
 
 .message-item.sent {
   background-color: #e1ffc7;
   align-self: flex-end;
+  margin-left: auto;
 }
 
 .message-item.received {
   background-color: #f1f0f0;
   align-self: flex-start;
+  margin-right: auto;
+}
+
+.message-item p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.message-item span {
+  font-size: 10px;
+  color: #777777;
+  position: absolute;
+  bottom: -15px;
+  right: 10px;
+}
+
+@media (max-width: 480px) {
+  .message-item {
+    max-width: 80%;
+    padding: 8px 12px;
+  }
+
+  .message-item p {
+    font-size: 12px;
+  }
+
+  .message-item span {
+    font-size: 8px;
+  }
 }

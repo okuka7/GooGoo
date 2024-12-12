@@ -28,18 +28,21 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket' // WebSocket 의존성
+	implementation 'org.springframework.security:spring-security-messaging' // STOMP 지원
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	testImplementation 'org.mockito:mockito-inline:4.11.0' // 추가
-	testImplementation 'org.mockito:mockito-inline:4.11.0' // 추가
+	testImplementation 'org.mockito:mockito-inline:4.11.0' // 중복 제거
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	// CORS 설정을 위한 의존성 (이미 포함됨, 중복 제거)
 }
 
 tasks.named('test') {
@@ -47,4 +50,6 @@ tasks.named('test') {
 }
 tasks.withType(JavaCompile) {
 	options.compilerArgs += "-parameters"
+	sourceCompatibility = '17'
+	targetCompatibility = '17'
 }

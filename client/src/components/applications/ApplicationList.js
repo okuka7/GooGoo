@@ -6,11 +6,13 @@ import {
   fetchApplicationsByPost,
   updateApplicationStatus,
 } from "../../store/applicationSlice";
+import { useNavigate } from "react-router-dom";
 import "./ApplicationList.css";
 import UserSurveyPopup from "../survey/UserSurveyPopup";
 
 const ApplicationList = ({ postId }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const applications = useSelector(
     (state) => state.applications.applicationsByPost[postId] || []
   );
@@ -52,6 +54,14 @@ const ApplicationList = ({ postId }) => {
     setCurrentUserId(null);
   };
 
+  const handleSendMessage = (username) => {
+    if (!username) {
+      alert("유효한 사용자를 선택해주세요.");
+      return;
+    }
+    navigate(`/messages/${username}`);
+  };
+
   if (loading) return <p>로딩 중...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (applications.length === 0) return <p>신청자가 없습니다.</p>;
@@ -63,29 +73,43 @@ const ApplicationList = ({ postId }) => {
         {applications.map((app) => {
           console.log("Application Item:", app);
           const userId = app.userId;
+          const applicantUsername = app.applicantUsername; // 이 필드가 존재하는지 확인
           if (!userId) {
-            console.warn(`User ID is missing for application ID: ${app.id}`);
+            console.warn(`User ID가 누락된 신청 ID: ${app.id}`);
+          }
+          if (!applicantUsername) {
+            console.warn(`Applicant Username이 누락된 신청 ID: ${app.id}`);
           }
           return (
             <li key={app.id} className="applicant-item">
-              <button onClick={() => handleViewSurvey(userId)}>
-                {app.applicantNickname}
-              </button>{" "}
-              - 상태: {app.status}
-              {app.status === "PENDING" && (
-                <div className="status-buttons">
-                  <button
-                    onClick={() => handleStatusChange(app.id, "ACCEPTED")}
-                  >
-                    승인
-                  </button>
-                  <button
-                    onClick={() => handleStatusChange(app.id, "REJECTED")}
-                  >
-                    거절
-                  </button>
-                </div>
-              )}
+              <div className="applicant-info">
+                <button onClick={() => handleViewSurvey(userId)}>
+                  {app.applicantNickname}
+                </button>{" "}
+                - 상태: {app.status}
+              </div>
+              <div className="action-buttons">
+                {app.status === "PENDING" && (
+                  <div className="status-buttons">
+                    <button
+                      onClick={() => handleStatusChange(app.id, "ACCEPTED")}
+                    >
+                      승인
+                    </button>
+                    <button
+                      onClick={() => handleStatusChange(app.id, "REJECTED")}
+                    >
+                      거절
+                    </button>
+                  </div>
+                )}
+                <button
+                  className="message-button"
+                  onClick={() => handleSendMessage(applicantUsername)}
+                >
+                  메시지 보내기
+                </button>
+              </div>
             </li>
           );
         })}

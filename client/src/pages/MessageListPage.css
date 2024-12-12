@@ -1,0 +1,47 @@
+/* src/pages/MessageListPage.css */
+
+.message-list-page {
+  padding: 20px;
+}
+
+.conversation-list {
+  list-style: none;
+  padding: 0;
+}
+
+.conversation-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.conversation-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.conversation-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.conversation-username {
+  font-weight: bold;
+}
+
+.conversation-last-message {
+  color: #555;
+}
+
+.unread-badge {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 5px 10px;
+}

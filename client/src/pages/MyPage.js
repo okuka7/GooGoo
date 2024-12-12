@@ -1,3 +1,5 @@
+// src/pages/MyPage.js
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserInfo } from "../store/authSlice";
@@ -5,13 +7,13 @@ import { fetchUserPosts } from "../store/postSlice";
 import UserInfo from "../components/user/UserInfo";
 import { useNavigate } from "react-router-dom";
 import ApplicantList from "../components/applications/ApplicationList";
-import SurveyPopup from "../components/survey/SurveyPopup"; // ✅ 팝업 추가
+import SurveyPopup from "../components/survey/SurveyPopup";
 import "./MyPage.css";
 
 const MyPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isSurveyPopupOpen, setSurveyPopupOpen] = useState(false); // ✅ 팝업 상태 추가
+  const [isSurveyPopupOpen, setSurveyPopupOpen] = useState(false);
 
   const { user, loading, error, isAuthenticated } = useSelector(
     (state) => state.auth
@@ -44,16 +46,16 @@ const MyPage = () => {
   };
 
   const handleOpenSurveyPopup = () => {
-    setSurveyPopupOpen(true); // ✅ 팝업 열기
+    setSurveyPopupOpen(true);
   };
 
   const handleCloseSurveyPopup = () => {
-    setSurveyPopupOpen(false); // ✅ 팝업 닫기
+    setSurveyPopupOpen(false);
   };
 
   const handleSurveySubmit = () => {
     setSurveyPopupOpen(false);
-    dispatch(fetchUserInfo()); // ✅ 설문 완료 후 사용자 정보 갱신
+    dispatch(fetchUserInfo()); // 설문 완료 후 사용자 정보 갱신
   };
 
   return (
@@ -71,6 +73,11 @@ const MyPage = () => {
             </div>
             <div className="mypage-section__content">
               <UserInfo user={user} />
+              {user.responsibleOwner && (
+                <p className="responsible-owner-badge">
+                  🎉 책임감 있는 반려인 인증 완료!
+                </p>
+              )}
             </div>
           </section>
 
@@ -107,7 +114,7 @@ const MyPage = () => {
                   ? "설문을 완료하셨습니다."
                   : "설문을 완료하지 않으셨습니다."}
               </p>
-              {!user.surveyCompleted && ( // ✅ 설문 미완료 시 버튼 표시
+              {!user.surveyCompleted && (
                 <button
                   className="button button--survey"
                   onClick={handleOpenSurveyPopup}

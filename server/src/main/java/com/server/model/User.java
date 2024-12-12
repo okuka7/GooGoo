@@ -31,6 +31,9 @@ public class User {
     @Column(nullable=false)
     private String password;
 
+    @Column(nullable = false)
+    private boolean responsibleOwner = false;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
@@ -47,14 +50,13 @@ public class User {
     @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL)
     private List<Application> applications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-    private List<Message> sentMessages = new ArrayList<>();
-
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    private List<Message> receivedMessages = new ArrayList<>();
 
     public boolean isSurveyCompleted() {
         return this.survey != null;
+    }
+
+    public void setResponsibleOwner(boolean responsibleOwner) {
+        this.responsibleOwner = responsibleOwner;
     }
 }
 

@@ -1,19 +1,21 @@
-// src/components/Header.js
+// src/components/common/Header.js
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/authSlice";
+import { fetchUnreadCount } from "../../store/messageSlice"; // messageSlice 추가
 import Modal from "../common/Modal";
 import Login from "../auth/Login";
 import Signup from "../auth/Signup";
-import { FaUser } from "react-icons/fa";
-import api from "../../api/api";
+import { FaUser, FaEnvelope } from "react-icons/fa"; // 메시지 아이콘 추가
 import "./Header.css";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const unreadCount = useSelector((state) => state.messages.unreadCount);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
@@ -48,8 +50,9 @@ const Header = () => {
   useEffect(() => {
     if (isAuthenticated) {
       setIsModalOpen(false);
+      dispatch(fetchUnreadCount()); // 로그인 시 읽지 않은 메시지 수 가져오기
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, dispatch]);
 
   return (
     <header className="header">
@@ -70,6 +73,14 @@ const Header = () => {
             <>
               <li>
                 <Link to="/mypage">마이페이지</Link>
+              </li>
+              <li>
+                <Link to="/messages">
+                  <FaEnvelope className="message-icon" />
+                  {unreadCount > 0 && (
+                    <span className="unread-badge">{unreadCount}</span>
+                  )}
+                </Link>
               </li>
               <li>
                 <button onClick={handleLogout}>로그아웃</button>
